@@ -1,0 +1,32 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model User {
+  user_id     String   @id @default(uuid())
+  name        String
+  email       String   @unique
+  password    String
+  role        String   @default("customer")
+  is_verified Boolean  @default(false)
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+
+  @@map("users")
+}
+
+model OTP {
+  id         String   @id @default(uuid())
+  email      String
+  otp        String
+  expires_at DateTime
+
+  @@map("otps")
+}
